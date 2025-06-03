@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Đăng ký tài khoản</h2>
+
+    <form th:action="@{/add-customer}" method="post" th:object="${customer}" novalidate class="space-y-4">
+        <!-- Username -->
+        <div>
+            <label for="username" class="block text-sm font-medium text-gray-700">Tên người dùng</label>
+            <input type="text" id="username" th:field="*{username}" required
+                   class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+        <!-- Password -->
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
+            <input type="password" id="password" th:field="*{password}" required
+                   class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="email" th:field="*{email}" required
+                   class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+        <!-- Phone -->
+        <div>
+            <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Số điện thoại</label>
+            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required
+                   class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+        <!-- Role -->
+        <div>
+            <label for="role" class="block text-sm font-medium text-gray-700">Quyền</label>
+            <select id="role" name="role" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                <option value="">-- Chọn quyền --</option>
+                <option value="User">USER</option>
+                <option value="Admin">ADMIN</option>
+            </select>
+        </div>
+
+        <!-- Status -->
+        <div>
+            <label for="status" class="block text-sm font-medium text-gray-700">Trạng thái</label>
+            <select id="status" name="status" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                <option value="">-- Chọn trạng thái --</option>
+                <option value="true">Hoạt động</option>
+                <option value="false">Không hoạt động</option>
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+            <button type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow">
+                Đăng ký
+            </button>
+        </div>
+
+        <!-- Success Message -->
+        <div th:if="${success}" th:text="${success}" class="text-green-600 text-center font-medium mt-4"></div>
+    </form>
+</div>
+</body>
+</html>

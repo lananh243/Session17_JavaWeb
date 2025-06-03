@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h4>List Book</h4>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Book Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>Price 2</th>
+        <th>ISBN</th>
+        <th>image</th>
+        <th>Image 2</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.bookTitle}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.price}"></td>
+        <td th:text="${book.price2}"></td>
+        <td th:text="${book.image}"></td>
+        <td th:text="${book.image2}"></td>
+        <td th:text="${book.ISBN}"></td>
+        <td><a th:href="${'/book-delete/' + book.id}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
