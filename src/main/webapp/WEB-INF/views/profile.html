@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Lịch sử đơn hàng</h2>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+        <th>Mã đơn</th>
+        <th>Địa chỉ</th>
+        <th>Tên khách hàng</th>
+        <th>Số điện thoại</th>
+        <th>Trạng thái</th>
+        <th>Tổng tiền</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.address}"></td>
+        <td th:text="${order.recipientName}"></td>
+        <td th:text="${order.phoneNumber}"></td>
+        <td th:text="${order.status}"></td>
+        <td th:text="${order.totalMoney}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

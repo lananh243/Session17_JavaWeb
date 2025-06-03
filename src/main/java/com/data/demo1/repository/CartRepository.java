@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface CartRepository {
     List<ProductCart> findAll();
-    void update(ProductCart productCart);
-    void delete(int productId);
+    void updateQuantityById(int id, int quantity);
+
+    void delete(int  cartId);
+    ProductCart findCartById(int id);
 }

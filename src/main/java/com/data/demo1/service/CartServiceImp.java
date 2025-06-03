@@ -16,12 +16,18 @@ public class CartServiceImp implements CartService {
     }
 
     @Override
-    public void update(ProductCart productCart) {
-        cartRepo.update(productCart);
+    public void updateQuantityById(int id, int quantity) {
+        cartRepo.updateQuantityById(id, quantity);
     }
 
     @Override
-    public void delete(int productId) {
-        cartRepo.delete(productId);
+    public void delete(int cartId) {
+        cartRepo.delete(cartId);
     }
+
+    @Override
+    public ProductCart findCartById(int id) {
+        return cartRepo.findCartById(id);
+    }
+
 }

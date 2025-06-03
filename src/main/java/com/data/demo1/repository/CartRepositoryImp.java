@@ -24,36 +24,46 @@ public class CartRepositoryImp implements CartRepository {
     }
 
     @Override
-    public void update(ProductCart productCart) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            Query query = session.createQuery(
-                    "UPDATE ProductCart p SET p.productId = :productId, p.quantity = :quantity WHERE p.id = :id");
-            query.setParameter("productId", productCart.getProductId());
-            query.setParameter("quantity", productCart.getQuantity()); // giả sử có quantity
-            query.setParameter("id", productCart.getId());
-
-            int updated = query.executeUpdate();
-
-            transaction.commit();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void delete(int productId) {
+    public void delete(int cartId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
         try {
-            Query query = session.createQuery("DELETE FROM ProductCart WHERE productId=:productId");
-            query.setParameter("productId", productId);
+            Query query = session.createQuery("DELETE FROM ProductCart WHERE id=:cartId");
+            query.setParameter("cartId", cartId);
             query.executeUpdate();
             transaction.commit();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
+    public void updateQuantityById(int id, int quantity) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+
+            ProductCart existingCart = session.get(ProductCart.class, id);
+            if (existingCart != null) {
+                existingCart.setQuantity(quantity);
+                session.update(existingCart);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public ProductCart findCartById(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(ProductCart.class, id);
+        }
+    }
+
 }

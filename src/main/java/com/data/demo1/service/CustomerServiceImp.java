@@ -14,4 +14,9 @@ public class CustomerServiceImp implements CustomerService {
     public void save(Customer customer) {
         customerRepo.save(customer);
     }
+
+    @Override
+    public Customer findById(int customerId) {
+        return customerRepo.findById(customerId);
+    }
 }

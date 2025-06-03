@@ -65,4 +65,21 @@ public class ProductCartRepositoryImp implements ProductCartRepository {
         transaction.commit();
         return productCartList;
     }
+
+    @Override
+    public void clearCartByCustomerId(int customerId) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            Query query = session.createQuery("DELETE FROM ProductCart WHERE customerId = :customerId");
+            query.setParameter("customerId", customerId);
+            query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+    }
 }

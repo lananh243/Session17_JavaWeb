@@ -123,15 +123,52 @@ public class LoginController {
             return "redirect:/login";
         }
 
-        List<ProductCart> cartItems = productCartService.findByCustomerId(customer.getId());
+        List<ProductCart> cartItems = productCartService.findAllByCustomerId(customer.getId());
         model.addAttribute("cartItems", cartItems);
 
-        // Tính tổng giá trị giỏ hàng
-        double totalPrice = cartItems.stream()
-                .mapToDouble(item -> item.getQuantity() * item.getProduct().getPrice())
-                .sum();
-        model.addAttribute("totalPrice", totalPrice);
+        double totalPrice = 0.0;
+        for (ProductCart item : cartItems) {
+            Product product = productService.findById(item.getProductId());
+            if (product != null) {
+                totalPrice += item.getQuantity() * product.getPrice();
+            }
+        }
 
+        model.addAttribute("totalPrice", totalPrice);
         return "cart_list";
     }
+
+
+    @PostMapping("/delete-cart")
+    public String deleteCart(@RequestParam("cartId") int cartId,
+                             HttpSession session,
+                             RedirectAttributes redirectAttributes) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (customer == null) {
+            redirectAttributes.addFlashAttribute("error", "Bạn cần đăng nhập để xóa sản phẩm trong giỏ hàng.");
+            return "redirect:/login";
+        }
+
+        cartService.delete(cartId);
+        redirectAttributes.addFlashAttribute("message", "Xóa sản phẩm khỏi giỏ hàng thành công.");
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/update-cart")
+    public String updateCartQuantity(@RequestParam int cartId,
+                                     @RequestParam int quantity,
+                                     HttpSession session,
+                                     RedirectAttributes redirectAttributes) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        if (customer == null) {
+            redirectAttributes.addFlashAttribute("error", "Bạn cần đăng nhập để cập nhật giỏ hàng.");
+            return "redirect:/login";
+        }
+
+        cartService.updateQuantityById(cartId, quantity);
+        redirectAttributes.addFlashAttribute("message", "Cập nhật số lượng thành công!");
+        return "redirect:/cart";
+    }
+
+
 }

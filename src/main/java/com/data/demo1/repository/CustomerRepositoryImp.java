@@ -20,4 +20,13 @@ public class CustomerRepositoryImp implements CustomerRepository {
         session.save(customer);
         transaction.commit();
     }
+
+    @Override
+    public Customer findById(int customerId) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Customer customer = session.get(Customer.class, customerId);
+        transaction.commit();
+        return customer;
+    }
 }

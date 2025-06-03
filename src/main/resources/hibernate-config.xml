@@ -24,5 +24,6 @@
         <mapping class="com.data.demo1.entity.Customer"/>
         <mapping class="com.data.demo1.entity.Product"/>
         <mapping class="com.data.demo1.entity.ProductCart"/>
+        <mapping class="com.data.demo1.entity.Order"/>
     </session-factory>
 </hibernate-configuration>

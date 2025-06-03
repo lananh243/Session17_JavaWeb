@@ -20,4 +20,9 @@ public class ProductCartServiceImp implements ProductCartService {
     public List<ProductCart> findAllByCustomerId(int customerId) {
         return productCartRepo.findAllByCustomerId(customerId);
     }
+
+    @Override
+    public void clearCartByCustomerId(int customerId) {
+        productCartRepo.clearCartByCustomerId(customerId);
+    }
 }
